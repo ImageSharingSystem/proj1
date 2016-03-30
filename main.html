@@ -1,0 +1,54 @@
+<div style="background-image:url('blue.jpg');width:100%;height:100%;solid black;">
+<html>
+<title> Main Page </title>
+<div class="personal_info" align="right">
+<h5> <font color = "white"> Name: user.getName() </h5>
+<a href="address"><font color = "yellow">Logout</a>
+</div>
+
+<form method="post" action="a.jsp">
+<div class="search_photo">
+&ensp;&ensp;&ensp;<input type="text" name="search_photo" class="search" placeholder="Search photos.." />
+<input type="submit" name="search_photo" value="Search Photos">
+</div>
+</form>
+
+<div class="left_part" style="float:left">
+&ensp;<h3> <font color = "white"> Groups </h3>
+<form method="post" action="a.jsp">
+<div style="width:300px;height:600px;line-height:3em;overflow:scroll;padding:5px;">
+<div align="center">
+<a href="address"><font color = "yellow">Family</a><br>
+<a href="address"><font color = "yellow">Friend</a><br>
+<a href="address"><font color = "yellow">Lover</a><br>
+<a href="address"><font color = "yellow">Default</a><br>
+</div>
+</div>
+
+
+<form method="post" action="a.jsp">
+&ensp;&ensp;&ensp;&ensp;<input type="submit" name="add" value="Add">
+
+<form method="post" action="a.jsp">
+&ensp;<input type="submit" name="delete" value="Delete">
+
+<form method="post" action="a.jsp">
+&ensp;<input type="submit" name="rename" value="Rename">
+</form>
+</div>
+
+
+
+<div class="right_part" style="float:right">
+<div align="center">
+<h3> <font color ="white"> Personal Photos </h3>
+<div style="width:1500px;height:750px;line-height:3em;overflow:scroll;padding:5px;">
+<form action="demo_form.asp">
+<input type="file" name="pic" accept="image/*">
+<form method="post" action="a.jsp">
+<input type="submit" value="Upload" style="height:50px; width:150px">
+</form>
+</div>
+</div>
+</div>
+</html>
