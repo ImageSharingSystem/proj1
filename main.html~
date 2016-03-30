@@ -39,13 +39,10 @@
 
 
 
-<div class="right_part"  style="width:1300px;
-    height:auto;
-    text-align:center;
-    position:relative;float:right;">
+<div class="right_part" style="float:right">
 <div align="center">
 <h3> <font color ="white"> Personal Photos </h3>
-<div style="width:1200px;height:600px;line-height:3em;overflow:scroll;padding:5px;">
+<div style="width:1500px;height:750px;line-height:3em;overflow:scroll;padding:5px;">
 <form action="demo_form.asp">
 <input type="file" name="pic" accept="image/*">
 <form method="post" action="a.jsp">
@@ -55,4 +52,3 @@
 </div>
 </div>
 </html>
-
