@@ -19,17 +19,24 @@ Email:<u>dingkai@ualberta.ca</u><br><br>
 <br><br><br>
 <p style="padding:6px; color: black; background-color: lightblue; border: yellow 2px solid; width:300px;height:200px;">
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;Group<br><br><br>
-<input type="checkbox" name="default" value="default">default
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="checkbox" name="friend" value="friend">friend<br><br>
-<input type="checkbox" name="lower" value="lower">lower
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="checkbox" name="family" value="family">family<br><br>
+
+<select id="public">
+<option value="" disabled="disabled" selected="selected">Please select one group</option>
+<option name="choice1" value="default">   Default  </option>
+<option name="choice2" value="family">  Family </option>
+<option name="choice3" value="friends"> Friends </option>
+<option name="choice4" value="lover"> Lover </option>
+</select>
+<br><br><br>
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<input type="submit" name="save" value="Save" style="height:50px; width:150px">
+</form>
 </div>
 
 <div class="right_part" style="float:right">
 <br><br><br><br><br>
 &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;<h3> <font color ="white"> Your Friend's Photos </h3>
-<div style="width:1300px;height:650px;line-height:3em;overflow:scroll;padding:5px;">
+<div style="width:1300px;height:650px;line-height:3em;overflow:scroll;padding:5px;" align="left">
+<img src="view.jpg" alt="View" style="width:304px;height:228px;">
 </div>
 <a href="/main_ui.html"><font color = "yellow"><button name="Back" style="height:50px; width:150px"> Back </button></a><br>
 </html>
