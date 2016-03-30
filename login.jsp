@@ -82,7 +82,7 @@
                 }
                 if(state == 1){
                         session.setAttribute("user_name",user_name);
-                        response.setHeader("REFRESH","2;url=main.html");
+                        response.setHeader("REFRESH","2;url=main.jsp");
                 } else {
                         response.setHeader("REFRESH","2;url=login.html");
                 }

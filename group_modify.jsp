@@ -2,24 +2,19 @@
 <HEAD>
 
 
-<TITLE>Your Signup Result</TITLE>
+<TITLE>Group Modify</TITLE>
 </HEAD>
 
 <BODY>
 <%@ page import="java.sql.*,java.util.*" %>
 <% 
-
-        if(request.getParameter("submit") != null)
+        if(request.getParameter("add") != null || request.getParameter("delete") != null )
         {
 
-	        //get the user info from the signup page
-        	String user_name = (request.getParameter("user_name")).trim();
-	        String psw = (request.getParameter("psw")).trim();
-		String fname = (request.getParameter("fname")).trim();
-		String lname = (request.getParameter("lname")).trim();
-		String addr = (request.getParameter("addr")).trim();
-		String email = (request.getParameter("email")).trim();
-		String phone = (request.getParameter("phone")).trim();
+	        String user_name = "admin";//session.getAttribute("user_name").toString();
+		session.setAttribute("user_name",user_name);
+        	String group_add = (request.getParameter("group_add")).trim();
+	        String group_delete = (request.getParameter("group_delete")).trim();
 
 	        //establish the connection to the underlying database
         	Connection conn = null;
@@ -51,17 +46,18 @@
 	        //insert new user into db
         	Statement stmt = null;
 	        ResultSet rset = null;
-        	String sql1 = "insert into users(user_name,password) values('"+user_name+"','"+psw+"')";
-		String sql2 = "insert into persons values('"+user_name+"','"+fname+"','"+lname+"','"+addr+"','"+email+"','"+phone+"')";
-        	int state = 1;
+        	String sql1 = "insert into groups(user_name,group_name) values('"+user_name+"','"+group_add+"')";
+		String sql2 = "delete from groups where user_name='"+user_name+"' and group_name='"+group_delete+"'";
 		try{
 	        	stmt = conn.createStatement();
-		        stmt.executeQuery(sql1);
-			stmt.executeQuery(sql2);
-        	}
+			if (request.getParameter("add") != null){
+		           stmt.executeQuery(sql1);
+			} else {
+			  stmt.executeQuery(sql2);
+        		}
+		}
 	
 	        catch(SQLException ex){
-		        state = 0;
 			if(ex.getErrorCode() == 1400){
 			  out.println("<hr><b>User Name must not be empty!</b><hr>");
 			} else if (ex.getErrorCode()==1){
@@ -78,17 +74,9 @@
                 catch(Exception ex){
                         out.println("<hr>" + ex.getMessage() + "<hr>");
                 }
-                if(state == 1){
-			out.println("<p><b>Your Signup is Successful! </b></p>");
-                        session.setAttribute("user_name",user_name);
-                        response.setHeader("REFRESH","2;url=main.jsp");
-                } else {
-                        response.setHeader("REFRESH","2;url=signup.html");
-                }
-                out.println("<p><b>redircting in 2 seconds</b><p>");
-              
-        }else
-                response.sendRedirect("login.html");    
+	} else {
+	       response.sendRedirect("main.jsp");
+	}
 %>
 
 

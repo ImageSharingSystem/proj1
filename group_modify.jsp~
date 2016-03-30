@@ -2,14 +2,20 @@
 <HEAD>
 
 
-<TITLE>Your Signup Result</TITLE>
+<TITLE>Group Modify</TITLE>
 </HEAD>
 
 <BODY>
 <%@ page import="java.sql.*,java.util.*" %>
 <% 
-
-        if(request.getParameter("submit") != null)
+	String user_name;
+	if (session.getAttribute("user_name")==null){
+   	//response.sendRedirect("login.html");
+		user_name = "admin";
+	} else {
+	        user_name = session.getAttribute("user_name").toString();
+	}
+        if(request.getParameter("add") != null or request.getParameter("delete") != null )
         {
 
 	        //get the user info from the signup page
@@ -51,7 +57,7 @@
 	        //insert new user into db
         	Statement stmt = null;
 	        ResultSet rset = null;
-        	String sql1 = "insert into users(user_name,password) values('"+user_name+"','"+psw+"')";
+        	String sql1 = "insert into groups(user_name,group_name) values('"+user_name+"','"+psw+"')";
 		String sql2 = "insert into persons values('"+user_name+"','"+fname+"','"+lname+"','"+addr+"','"+email+"','"+phone+"')";
         	int state = 1;
 		try{

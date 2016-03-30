@@ -1,9 +1,44 @@
+<%@ page import="java.sql.*"%>
+<%
+String user_name;
+if (session.getAttribute("user_name")==null){
+   response.sendRedirect("login.html");
+   user_name = null;
+} else {
+	user_name = session.getAttribute("user_name").toString();
+}
+ //establish the connection to the underlying database
+Connection conn = null;
+	
+String driverName = "oracle.jdbc.driver.OracleDriver";
+String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
+	
+try{
+	//load and register the driver
+        Class drvClass = Class.forName(driverName); 
+	DriverManager.registerDriver((Driver) drvClass.newInstance());
+        	}
+	        catch(Exception ex){
+		        out.println("<hr>" + ex.getMessage() + "<hr>");
+	
+	        }
+	
+        	try{
+	        	//establish the connection 
+		        conn = DriverManager.getConnection(dbstring,"dingkai","az11kt133");
+        		conn.setAutoCommit(false);
+	        }
+        	catch(Exception ex){
+	        
+		        out.println("<hr>" + ex.getMessage() + "<hr>");
+        	}
+%>
 <div style="background-image:url('blue.jpg');width:100%;height:100%;solid black;">
 <html>
 <title> Main Page </title>
 <div class="personal_info" align="right">
-<h5> <font color = "white"> Name: user.getName() </h5>
-<a href="address"><font color = "yellow">Logout</a>
+<h1> <font color = "white"> Name: <%=user_name%> </h1>
+<a href="login.html"><font color = "yellow" onclick=<%session.removeAttribute("user_name");%>>Logout</a>
 </div>
 
 <form method="post" action="a.jsp">
@@ -54,4 +89,3 @@
 </div>
 </div>
 </html>
-
