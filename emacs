@@ -8,8 +8,10 @@
 <BODY>
 <%@ page import="java.sql.*,java.util.*" %>
 <% 
+
         if(request.getParameter("submit") != null)
         {
+
 	        //get the user info from the signup page
         	String user_name = (request.getParameter("user_name")).trim();
 	        String psw = (request.getParameter("psw")).trim();
@@ -18,6 +20,7 @@
 		String addr = (request.getParameter("addr")).trim();
 		String email = (request.getParameter("email")).trim();
 		String phone = (request.getParameter("phone")).trim();
+
 	        //establish the connection to the underlying database
         	Connection conn = null;
 	
@@ -44,6 +47,7 @@
 		        out.println("<hr>" + ex.getMessage() + "<hr>");
         	}
 	
+
 	        //insert new user into db
         	Statement stmt = null;
 	        ResultSet rset = null;
@@ -66,10 +70,8 @@
 			} else { 
 		          out.println("<hr>" + ex.getErrorCode() + "<hr>");
         		}
-		}
-                catch(Exception ex){
-                        out.println("<hr>" + ex.getMessage() + "<hr>");
-                }
+		}	
+
                 try{
                         conn.close();
                 }
@@ -83,7 +85,7 @@
                 } else {
                         response.setHeader("REFRESH","2;url=signup.html");
                 }
-                out.println("<p><b>redircting in 2 seconds</b><p>");
+                out.println("<p><b>redirecting in 2 seconds</b><p>");
               
         }else
                 response.sendRedirect("login.html");    
@@ -93,3 +95,4 @@
 
 </BODY>
 </HTML>
+

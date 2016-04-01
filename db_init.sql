@@ -38,7 +38,8 @@ create table groups(
        group_name	char(20),
        date_created	date default sysdate,
        foreign key(user_name) references users(user_name),
-       primary key(group_id)
+       primary key(group_id),
+       check(group_name is not null)
 );
 
 create table group_lists(

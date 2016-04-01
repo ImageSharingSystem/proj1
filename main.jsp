@@ -1,13 +1,15 @@
-<%@ page import="java.sql.*"%>
+<div style="background-image:url('blue.jpg');width:100%;height:100%;solid black;">
+<html>
+<%@ page import="java.sql.*,java.util.*" %>
 <%
-String user_name;
+//Check if login
+String user_name = null;
 if (session.getAttribute("user_name")==null){
-   //response.sendRedirect("login.html");
-   user_name = "admin";
-} else {
+	response.sendRedirect("login.html");
+}else{
 	user_name = session.getAttribute("user_name").toString();
-}
- //establish the connection to the underlying database
+} 
+//establish the connection to the underlying database
 Connection conn = null;
 	
 String driverName = "oracle.jdbc.driver.OracleDriver";
@@ -20,7 +22,9 @@ try{
 }
 catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
+	
 }
+	
 try{
 	//establish the connection 
 	conn = DriverManager.getConnection(dbstring,"dingkai","az11kt133");
@@ -30,12 +34,10 @@ catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
 }
 %>
-<div style="background-image:url('blue.jpg');width:100%;height:100%;solid black;">
-<html>
 <title> Main Page </title>
 <div class="personal_info" align="right">
-<h1> <font color = "white"> Name: <%=user_name%> </h1>
-<a href="login.html"><font color = "yellow" onclick=<%session.removeAttribute("user_name");%>>Logout</a>
+<p style="font-size:1.2em"> <font color = "white"> Name:<%=user_name%> </p>
+<a href="address"><font color = "yellow">Logout</a>
 </div>
 
 <form method="post" action="a.jsp">
@@ -47,54 +49,39 @@ catch(Exception ex){
 
 <div class="left_part" style="float:left">
 &ensp;<h3> <font color = "white"> Groups </h3>
-<div style="width:300px;height:600px;line-height:3em;overflow:scroll;padding:5px;">
+<form method="post" action="a.jsp">
+<div style="width:300px;height:550px;line-height:3em;overflow:scroll;padding:5px;">
 <div align="center">
 <%
 Statement stmt = null;
 ResultSet rset = null;
-String sql1 = "select count(*) from groups where user_name='"+user_name+"'";
-String sql2 = "select group_name from groups where user_name = '"+user_name+"'";
+String sql = "select group_name from groups where user_name = '"+user_name+"'";
 try{
 	stmt = conn.createStatement();
-	rset = stmt.executeQuery(sql1);
+	rset = stmt.executeQuery(sql);
 }
 	
 catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
 }
-int length=0;
-while(rset != null && rset.next()){
-	length = (rset.getInt(1));
-}
-
-try{
-	stmt = conn.createStatement();
-	rset = stmt.executeQuery(sql2);
-}
-	
-catch(Exception ex){
-	out.println("<hr>" + ex.getMessage() + "<hr>");
-}
-out.println("<form method='get' action='groups.jsp'>");
-String group_name = null;
-for(int index = 0;index<length;++index){
-	
-	while(rset != null && rset.next()){
-		   group_name = (rset.getString(index+1)).trim();
-	}
-	out.println("<input type='submit' value='"+group_name+"' name='"+group_name+"'style='width:250px;height:50px;font-size:1.5em'>");
-	out.println("<br>");	
-}
-out.println("</form>");
-	
 %>
+<form method="post" action="group.jsp">
+<%
+while(rset != null && rset.next()){
+	out.println("<input type='submit' value='"+rset.getString(1).trim()+"'style='width:250px;height:50px;font-size:2em;text-align:center'>");
+	out.println("<br>");
+}
+%>
+</form>
 </div>
 </div>
 
-<form method="post" action="group_modify.jsp">
-<input type="text" style="width:70px name="group_add" placeholder="Add Group.." />
-&ensp;&ensp;<input type="submit" value="add" name="add"style="width:70px"/><br>
-<br><input type="text" name="group_delete" placeholder="Delete Group.." />
+<form method="post" action="group_add.jsp">
+<input type="text" name="add" class="add" placeholder="Add Group.." />
+&ensp;&ensp;<input type="submit" name="submit" value="Add" style="width:70px">
+</form>
+<from method="post" action="group_delete.jsp">
+<input type="text" name="delete" class="delete" placeholder="Delete Group.." />
 &ensp;&ensp;<input type="submit" name="delete" value="Delete" style="width:70px">
 </form>
 </div>
@@ -114,14 +101,20 @@ out.println("</form>");
 <input type="submit" value="Upload" style="height:50px; width:150px">
 </form>
 </div>
+<div class="document" align="right">
+<br><br>
+<a href="address"><font color = "yellow">User Documentation</a><br>
+</div>
 </div>
 </div>
 <%
- try{
+try{
 	conn.close();
 }
 catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
 }
 %>
+
 </html>
+

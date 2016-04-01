@@ -86,7 +86,7 @@
                 } else {
                         response.setHeader("REFRESH","2;url=login.html");
                 }
-                out.println("<p><b>redircting in 2 seconds</b><p>");
+                out.println("<p><b>redirecting in 2 seconds</b><p>");
               
         }else
                 response.sendRedirect("login.html");    
