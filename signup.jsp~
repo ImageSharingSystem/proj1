@@ -89,7 +89,7 @@
                 out.println("<p><b>redircting in 2 seconds</b><p>");
               
         }else
-                response.sendRedirect("login.html");
+                response.sendRedirect("login.html");    
 %>
 
 

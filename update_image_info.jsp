@@ -1,7 +1,10 @@
 <HTML>
 <BODY>
+<!-- import java class -->
 <%@ page import="java.sql.*" %>
 <% 
+
+// get the user info from the session
 String user_name = session.getAttribute("user_name").toString();
 String subject = (request.getParameter("subject")).trim();
 String place = (request.getParameter("place")).trim();
@@ -9,18 +12,22 @@ String description = (request.getParameter("description")).trim();
 int group = Integer.parseInt(request.getParameter("group"));
 int option = 0;//Integer.parseInt(request.getParameter("option"));
 int photo_id = Integer.parseInt(request.getParameter("photo_id"));
+
+// change permission
 int permitted;
 if(group==1||group==0){
   permitted = group;
 } else {
   permitted = option;
 }
+
 //establish the connection to the underlying database
 Connection conn = null;
-	
 String driverName = "oracle.jdbc.driver.OracleDriver";
 String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 	
+
+// error handling
 try{
 	//load and register the driver
         Class drvClass = Class.forName(driverName); 
@@ -39,6 +46,9 @@ try{
 catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
 }
+
+
+// SQL statement to update image info
 Statement stmt = null;
 ResultSet rset = null;
 String sql = "update images set subject='"+subject+"',place='"+place+"',description='"+description+"',permitted="+permitted+" where photo_id="+photo_id;
