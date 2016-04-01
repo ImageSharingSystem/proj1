@@ -44,7 +44,7 @@
               Start Date: <input name="start" type="date"> </br></br>    
 	      End Date:  <input name="end" type="date">  </br>  
 
-              <input hidden type=text name="usrName" value=<%= usrName%>></br>
+              <input hidden type=text name="usrName" value=<%= usrName%></br>
        
               <input type=submit value="Search" name="search" align="center">
             </td>

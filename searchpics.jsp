@@ -53,7 +53,7 @@
         {
         
           out.println("<br>");
-     //     out.println("Query is " + request.getParameter("query"));
+          out.println("Query is " + request.getParameter("query"));
           out.println("<br>");
         
           if(!(request.getParameter("query").equals("")))
@@ -62,8 +62,8 @@
             String startD, endD;
             startD = request.getParameter("start");          
             endD = request.getParameter("end");
-            if(startD==""){startD = "1980-01-01";}
-            if(endD==""){endD ="2080-01-01";}
+            if(startD==""){startD = "1900-01-01";}
+            if(endD==""){endD ="2100-01-01";}
             String sql = "SELECT photo_id, permitted, owner_name FROM images WHERE contains(subject, ?, 1) > 0 OR contains(place, ?, 2) > 0 OR contains(description, ?, 3) > 0 order by ";
             // time is at: anytime
             if(request.getParameter("time").equals("at")){
@@ -97,9 +97,8 @@
             String sqlt;
             while(rset.next())
             {
-            // Here, we implement the security funcs such that thumbnail will not be returned if the user does not have the permission!
-            // To do this, I check if userName is in the group_lists with the groupid equals to the permitted value of this image
-            //score = rset.getInt(1);
+            
+
               p_id = (rset.getObject(1)).toString();
               sqlt ="select photo_id from images where photo_id = "+p_id+" and date_upload BETWEEN TO_DATE ('"+startD+"', 'yyyy-mm-dd') AND TO_DATE ('"+endD+"', 'yyyy-mm-dd')";
               st = m_con.createStatement();
