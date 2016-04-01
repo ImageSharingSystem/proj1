@@ -42,10 +42,9 @@ catch(Exception ex){
 &ensp;&ensp;&ensp;&ensp;<a href="login.jsp"><font color = "yellow">Logout</a>
 &ensp;&ensp;&ensp;&ensp;</div>
 
-<form method="post" action="a.jsp">
+<form method="post" action="indexSearch.jsp">
 <div class="search_photo">
-&ensp;&ensp;&ensp;<input type="text" name="search_photo" class="search" placeholder="Search photos.." />
-<input type="submit" name="search_photo" value="Search Photos">
+<input type="submit" name="search" value="Search">
 </div>
 </form>
 

@@ -80,11 +80,10 @@
               sql += "date_upload asc";
               doSearch = m_con.prepareStatement(sql);
             }  
-// (date_upload BETWEEN TO_DATE ('"+startD+"', 'yyyy-mm-dd') AND TO_DATE ('"+endD+"', 'yyyy-mm-dd') )
+
             doSearch.setString(1, request.getParameter("query"));
             doSearch.setString(2, request.getParameter("query"));
             doSearch.setString(3, request.getParameter("query"));
-         //   out.println(sql);
             ResultSet rset = doSearch.executeQuery();
             String p_id = "", permitted = "", owner ="";
             Integer score;
@@ -119,7 +118,7 @@
                   allowed = true;          
                 }
             
-                              // permitted is public is a special case
+                // permitted is public is a special case
                 if(allowed || permitted.equals("1") || owner.equals(userName) || userName.equals("admin")){
                  // specify the servlet for the image
                   out.println("<a href=\"GetBigPic?big"+p_id+"\">");

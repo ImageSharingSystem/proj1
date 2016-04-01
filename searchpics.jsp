@@ -118,14 +118,14 @@
                   allowed = true;          
                 }
             
-                              // permitted is public is a special case
+                // permitted is public is a special case
                 if(allowed || permitted.equals("1") || owner.equals(userName) || userName.equals("admin")){
                  // specify the servlet for the image
                   out.println("<a href=\"GetBigPic?big"+p_id+"\">");
                  // specify the servlet for the themernail
                   out.println("<img src=\"/proj1/GetOnePic?"+p_id +
                              "\"></a>");
-                //out.println(score);
+                
                 }
               }
             }
