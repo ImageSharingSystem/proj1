@@ -64,7 +64,12 @@ public class UploadImage extends HttpServlet {
 	String password = "az11kt133";
 	String drivername = "oracle.jdbc.driver.OracleDriver";
 	String dbstring ="jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
-	Integer pic_id = null;
+	int pic_id;
+	HttpSession session = request.getSession();
+	String user_name=null;
+	if (session.getAttribute("user_name")!=null){
+	    user_name = session.getAttribute("user_name").toString();
+	}
 	try {
 	    //Parse the HTTP request to get the image stream
 	    DiskFileUpload fu = new DiskFileUpload();
@@ -96,7 +101,7 @@ public class UploadImage extends HttpServlet {
 	    
 	    //Insert an empty blob into the table first. Note that you have to 
 	    //use the Oracle specific function empty_blob() to create an empty blob
-	    stmt.execute("INSERT INTO images(photo_id,thumbnail,photo) VALUES("+pic_id+",empty_blob(),empty_blob())");
+	    stmt.execute("INSERT INTO images(owner_name,photo_id,thumbnail,photo) VALUES('"+user_name+"',"+pic_id+",empty_blob(),empty_blob())");
 
 	    // to retrieve the lob_locator 
 	    // Note that you must use "FOR UPDATE" in the select statement
@@ -108,11 +113,10 @@ public class UploadImage extends HttpServlet {
 	    //response_message = pic_id.toString();
 
 	    //Write the image to the blob object
-	    OutputStream outstream = myblob1.getBinaryOutputStream();
-	    ImageIO.write(thumbNail, "jpg", outstream);
-	    outstream.close();
-	    outstream = myblob2.getBinaryOutputStream();
-	    ImageIO.write(img, "jpg", outstream);
+	    OutputStream outstream1 = myblob1.getBinaryOutputStream();
+	    OutputStream outstream2 = myblob2.getBinaryOutputStream();
+	    ImageIO.write(thumbNail, "jpg", outstream1);
+	    ImageIO.write(img, "jpg", outstream2);
 	    
 	    /*
 	    int size = myblob.getBufferSize();
@@ -122,7 +126,8 @@ public class UploadImage extends HttpServlet {
 		outstream.write(buffer, 0, length);
 	    */
 	    instream.close();
-	    outstream.close();
+	    outstream1.close();
+	    outstream2.close();
 
             stmt.executeUpdate("commit");
 	    response_message = " Upload OK!  ";
@@ -142,9 +147,10 @@ public class UploadImage extends HttpServlet {
 		    "<HEAD><TITLE>Upload Message</TITLE></HEAD>\n" +
 		    "<BODY>\n" +
 		    "<H1>" +
-		            response_message + pic_id +
+		            response_message +
 		    "</H1>\n" +
 		    "</BODY></HTML>");
+	response.sendRedirect("main.jsp"); 
     }
 
     /*

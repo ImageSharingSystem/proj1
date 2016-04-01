@@ -35,10 +35,12 @@ catch(Exception ex){
 }
 %>
 <title> Main Page </title>
-<div class="personal_info" align="right">
-<p style="font-size:1.2em"> <font color = "white"> Name:<%=user_name%> </p>
-<a href="address"><font color = "yellow">Logout</a>
-</div>
+<div align="right">
+
+<p style="font-size:1.5em"> <font color = "white"><b> Name:<%=user_name%> &ensp;&ensp;&ensp;&ensp;</b></p>
+<a href="address"><font color = "yellow">User Documentation</a>
+&ensp;&ensp;&ensp;&ensp;<a href="address"><font color = "yellow">Logout</a>
+&ensp;&ensp;&ensp;&ensp;</div>
 
 <form method="post" action="a.jsp">
 <div class="search_photo">
@@ -87,23 +89,42 @@ while(rset != null && rset.next()){
 </div>
 
 
-
 <div class="right_part"  style="width:1300px;
     height:auto;
     text-align:center;
     position:relative;float:right;">
+
 <div align="center">
 <h3> <font color ="white"> Personal Photos </h3>
-<div style="width:1200px;height:600px;line-height:3em;overflow:scroll;padding:5px;">
 <form name="upload-image" method="POST" enctype="multipart/form-data" action="UploadImage">
-<input type="file" name="pic" accept="image/*">
-<form method="post" action="a.jsp">
+<input type="file" name="photo" accept="image/*" size="30">
 <input type="submit" value="Upload" style="height:50px; width:150px">
 </form>
 </div>
-<div class="document" align="right">
-<br><br>
-<a href="address"><font color = "yellow">User Documentation</a><br>
+</div>
+
+<div style="width:1200px;height:550px;line-height:3em;overflow:scroll;padding:5px;">
+<%
+sql = "select photo_id from images where owner_name = '"+user_name+"'";
+try{
+	stmt = conn.createStatement();
+	rset = stmt.executeQuery(sql);
+}
+	
+catch(Exception ex){
+	out.println("<hr>" + ex.getMessage() + "<hr>");
+}
+int pic_id;
+out.println("<form method='get'  action=image.jsp>");
+out.println("<input type='hidden' name='photo' value=0></input>");
+while(rset != null && rset.next()){
+	pic_id = rset.getInt(1);
+%>
+	<input type="image" src="GetOnePic?<%=pic_id%>" onclick="photo.value=<%=pic_id%>"style="height:220px;" ></a>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+<%
+}
+out.println("</form>");
+%>
 </div>
 </div>
 </div>
