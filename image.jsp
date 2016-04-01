@@ -90,24 +90,29 @@ if(rset != null && rset.next()){
 <h2>Time &emsp;&emsp;&emsp;&emsp;&emsp;<%=time.toString()%></h2>
 <h2>Description &emsp;<input type="text" name="description" value=<%=description%>></h2><br>
 <%
-String str1 = "<h3><input type='radio'  name='group' value=0 ";
-String str2 = "<input type='radio' name='group' value=1 ";
+String str1 = "<h3><input type='radio'  name='group' value=1 ";
+String str2 = "<input type='radio' name='group' value=0 ";
 String str3 = "<input type='radio'  name='group' value=-1 ";
+String disable = " disabled='disabled' ";
 if (permitted==1){
-   str1+="checked";
+   str1+="checked ";
 }
-else if (permitted==0){
-   str2+="checked";
+else 
+{
+if (permitted==0){
+   str2+="checked ";
 }else{
-   str3+="checked";
+   str3+="checked ";
+   disable = "" ;
 }
-out.println(str1+">Private");
-out.println(str2+">Public");
-out.println(str3+">Others</h3>");
+}
 %>
+<%=str1%>onclick="option.disabled='true'">Private 
+<%=str2%>onclick="option.disabled='true'"> Public
+<%=str3%>onclick="option.removeAttribute('disabled')">Others</h3>
 
 <div>
-<select name="option" onchange='this.value=this.options[this.selectedIndex].value;'>
+<select name="option" <%=disable%> onchange='this.value=this.options[this.selectedIndex].value;'>
 <%
 sql = "select * from groups where user_name = '"+user_name+"'";
 try{
@@ -129,7 +134,7 @@ while(rset != null && rset.next()){
 	} else {
 	  select = "";
 	}
-	out.println("<option"+select+" value="+group_id+">"+group_name+"</option>");
+	out.println("<option "+select+" value="+group_id+">"+group_name+"</option>");
 }
 %>
 </select>
@@ -139,7 +144,8 @@ while(rset != null && rset.next()){
 <br>
 <input type="image" src="save.png"   width="100" height="60">
 </form>
-<form method="post" action="a.jsp">
+<form method="post" action="image_delete.jsp">
+<input type="hidden" value=<%=photo_id%> name="photo_id"></input>
 <input type="image" src="delete.png"  width="100" height="60">
 </form>
 </div>
