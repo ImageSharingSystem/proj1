@@ -65,6 +65,7 @@ if(rset != null && rset.next()){
 <div class="image" align="center" style="padding-top:200px">
 
 <form method="post" action="update_image_info.jsp">
+<input type="hidden" name="photo_id" value=<%=photo_id%>></input>
 <div class="image_info" align="center">
 <h2>Subject &emsp;&emsp;&emsp;<input type="text" name="subject" value=<%=subject%>></h2>
 <h2>Place &emsp;&emsp;&emsp;&emsp;<input type="text" name="place" value=<%=place%>></h2>
@@ -87,24 +88,42 @@ out.println(str2+">Public");
 out.println(str3+">Others</h3>");
 %>
 
-<div class="choice">
-<select id="public">
-<option value="" disabled="disabled" selected="selected">Please select one group</option>
-<option name="choice1" value="default">   Default  </option>
-<option name="choice2" value="family">  Family </option>
-<option name="choice3" value="friends"> Friends </option>
-<option name="choice4" value="lover"> Lover </option>
+<div>
+<select name="option" onchange='this.value=this.options[this.selectedIndex].value;'>
+<%
+sql = "select * from groups where user_name = '"+user_name+"'";
+try{
+	stmt = conn.createStatement();
+	rset = stmt.executeQuery(sql);
+}
+	
+catch(Exception ex){
+	out.println("<hr>" + ex.getMessage() + "<hr>");
+}
+String select = "";
+String group_name = null;
+Integer group_id = null;
+while(rset != null && rset.next()){
+	group_name = rset.getString("group_name");
+	group_id = rset.getInt("group_id");
+	if (group_id == permitted){
+	  select = "selected = 'selected'";
+	} else {
+	  select = "";
+	}
+	out.println("<option"+select+" value="+group_id+">"+group_name+"</option>");
+}
+%>
 </select>
 </div>
 
 
 <br>
+<input type="image" src="save.png"   width="100" height="60">
+</form>
 <form method="post" action="a.jsp">
-<input type="image" src="save.png" alt="Save" width="100" height="60">
-
-<form method="post" action="a.jsp">
-<input type="image" src="delete.png" alt="Save" width="100" height="60">
-
+<input type="image" src="delete.png"  width="100" height="60">
+</form>
 </div>
 </div>
 </div>
