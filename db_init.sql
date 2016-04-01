@@ -1,5 +1,5 @@
+drop trigger group_same_name;
 drop trigger default_group;
-drop trigger image_increment;
 drop sequence image_sequence;
 drop trigger group_increment;
 drop sequence group_sequence;
@@ -53,7 +53,7 @@ create table group_lists(
 create table images(
        photo_id		int,
        owner_name	char(20),
-       permitted	int,
+       permitted	int default 1,
        subject		char(20),
        place		char(20),
        date_taken	char(20),
@@ -86,18 +86,6 @@ minvalue 0
 start with 0 
 increment by 1;
 
-create trigger image_increment
-before insert
-on images
-for each row
-declare
-	dummy integer;
-begin
-	select image_sequence.nextval into dummy from dual;
-       :new.photo_id := dummy;
-end image_increment;
-/
-
 create trigger default_group
 after insert
 on users
@@ -105,6 +93,20 @@ for each row
 begin
 	insert into groups(user_name,group_name) values(:new.user_name,'default');
 end default_group;
+/
+create trigger group_same_name
+before insert
+on groups
+for each row
+declare dummy integer;
+begin
+	select count(*) into dummy
+	from groups g where g.group_name = :new.group_name
+	     	      and   g.user_name = :new.user_name;
+	if (dummy>0) then
+	   raise_application_error(-2001,'no same name group');
+	end if;
+end group_same_name;
 /
 
 insert into groups(group_name) values('public');

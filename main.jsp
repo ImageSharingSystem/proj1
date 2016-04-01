@@ -80,9 +80,9 @@ while(rset != null && rset.next()){
 <input type="text" name="add" class="add" placeholder="Add Group.." />
 &ensp;&ensp;<input type="submit" name="submit" value="Add" style="width:70px">
 </form>
-<from method="post" action="group_delete.jsp">
+<form method="post" action="group_delete.jsp">
 <input type="text" name="delete" class="delete" placeholder="Delete Group.." />
-&ensp;&ensp;<input type="submit" name="delete" value="Delete" style="width:70px">
+&ensp;&ensp;<input type="submit" name="submit" value="Delete" style="width:70px">
 </form>
 </div>
 
@@ -95,7 +95,7 @@ while(rset != null && rset.next()){
 <div align="center">
 <h3> <font color ="white"> Personal Photos </h3>
 <div style="width:1200px;height:600px;line-height:3em;overflow:scroll;padding:5px;">
-<form action="demo_form.asp">
+<form name="upload-image" method="POST" enctype="multipart/form-data" action="UploadImage">
 <input type="file" name="pic" accept="image/*">
 <form method="post" action="a.jsp">
 <input type="submit" value="Upload" style="height:50px; width:150px">
