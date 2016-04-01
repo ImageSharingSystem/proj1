@@ -2,7 +2,10 @@
 <BODY>
 <%@ page import="java.sql.*" %>
 <% 
-int photo_id = Integer.parseInt(request.getParameter("delete"));
+if(request.getParameter("submit") != null)
+{
+String friend_name = (request.getParameter("add")).trim();
+int group_id = Integer.parseInt(request.getParameter("group_id"));
 //establish the connection to the underlying database
 Connection conn = null;
 	
@@ -29,7 +32,7 @@ catch(Exception ex){
 }
 Statement stmt = null;
 ResultSet rset = null;
-String sql = "delete from groups where user_name ='"+user_name+"' and group_name='"+group_name+"'";
+String sql = "insert into group_lists(group_id,friend_name) values("+group_id+",'"+friend_name+"')";
 try{
 	stmt = conn.createStatement();
 	rset = stmt.executeQuery(sql);
@@ -42,6 +45,7 @@ try{
 }
 catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
+}
 }
 response.sendRedirect("main.jsp");
 %>

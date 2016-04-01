@@ -43,11 +43,12 @@ End Date:  <input name="end" type="date"><br><br>
 
 <br><br><br><br><br><br>
 <form method="post" action="main.jsp" name="send">
-<input type="submit" name="back" value = "back" style="width:200px; height:100px" onclick = "send.action='main.html'">
+<input type="submit" name="back" value = "back" style="width:200px; height:100px" onclick = "send.action='main.jsp'">
 </form>
 
 </div>
-</body>
 <%@ include file="closedb.jsp" %>
+</body>
+
 
 </html>

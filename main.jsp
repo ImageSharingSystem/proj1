@@ -44,19 +44,18 @@ catch(Exception ex){
 
 <form method="post" action="indexSearch.jsp">
 <div class="search_photo">
-<input type="submit" name="search" value="Search">
+<input type="submit" name="search" value="Search" >
 </div>
 </form>
 
 <div class="left_part" style="float:left">
 &ensp;<h3> <font color = "white"> Groups </h3>
-<form method="post" action="a.jsp">
 <div style="width:300px;height:550px;line-height:3em;overflow:scroll;padding:5px;">
 <div align="center">
 <%
 Statement stmt = null;
 ResultSet rset = null;
-String sql = "select group_name from groups where user_name = '"+user_name+"'";
+String sql = "select group_id,group_name from groups where user_name = '"+user_name+"'";
 try{
 	stmt = conn.createStatement();
 	rset = stmt.executeQuery(sql);
@@ -66,10 +65,11 @@ catch(Exception ex){
 	out.println("<hr>" + ex.getMessage() + "<hr>");
 }
 %>
-<form method="post" action="group.jsp">
+<form method='get' action='group.jsp'>
 <%
 while(rset != null && rset.next()){
-	out.println("<input type='submit' value='"+rset.getString(1).trim()+"'style='width:250px;height:50px;font-size:2em;text-align:center'>");
+	out.println("<input name='group_id' type='hidden' value="+rset.getInt(1)+">");
+	out.println("<input name='group_name' type='submit' value='"+rset.getString(2).trim()+"'style='width:250px;height:50px;font-size:2em;text-align:center'>");
 	out.println("<br>");
 }
 %>

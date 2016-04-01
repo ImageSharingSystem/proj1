@@ -100,7 +100,11 @@
                 }
                 if(state == 1){
                         session.setAttribute("user_name",user_name);
-                        response.setHeader("REFRESH","2;url=main.jsp");
+                        if(user_name.equals("admin")){
+                             response.setHeader("REFRESH","2;url=admin.jsp");
+                        } else {
+                             response.setHeader("REFRESH","2;url=main.jsp");
+                        }
                 } else {
                         response.setHeader("REFRESH","2;url=login.html");
                 }
